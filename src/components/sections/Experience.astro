@@ -1,18 +1,23 @@
 ---
-import Section from "../Section.astro"
+import Section from "../Section.astro";
 
-import { work } from "@cv"
+import { work } from "@cv";
+
+const formatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+});
 ---
 
-<Section title="Experiencia laboral">
+<Section title="Work Experience">
   <ul>
     {
       work.map(
         ({ name, startDate, endDate, position, summary, highlights, url }) => {
-          const startYear = new Date(startDate).getFullYear()
-          const endYear =
-            endDate != null ? new Date(endDate).getFullYear() : "Actual"
-          const years = `${startYear} - ${endYear}`
+          const start = formatter.format(new Date(startDate));
+          const end =
+            endDate != null ? formatter.format(new Date(endDate)) : "Actual";
+          const years = `${start} - ${end}`;
 
           return (
             <li>
@@ -35,8 +40,8 @@ import { work } from "@cv"
                 </footer>
               </article>
             </li>
-          )
-        }
+          );
+        },
       )
     }
   </ul>
